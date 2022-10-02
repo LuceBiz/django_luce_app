@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header class="masthead" style="background-image: url('static/ho/assets/img/index-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>RECYCLING, TOGETHER</h1>
+                    <span class="meta">
+                    <h2 class="subheading">The global emission of methane gases from textile landfills have been increasing incrementally.</h2>
+                    </span>
+                    <span class="meta">
+                        <h2 class="subheading">LUCE helps individuals make smarter choices in disposing preloved clothes.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% include 'includes/message.html' %}
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="#">
+                            <h2 class="post-title">OUR MECHANISM</h2>
+                        </a>
+                        <p class="post-subtitle">We help users engage in the effort of recycling preloved clothes by providing initiative in the form of coupons, rebates and vouchers. 
+                            Users can join in on the action by heeding the following steps:</p>
+                        <br>
+                        <div class="row">
+                            <div class="course-col">
+                                <h3>1) SORT</h3>
+                                <p class="text-justify">Users sort their preloved clothes into three main categories which are men, women and children. This helps in the weighing process used to determine the amount of points received.</p>
+                            </div>
+                            <hr class="my-4" />
+
+                            <div class="course-col">
+                                <h3>2) SCAN</h3>
+                                <p class="text-justify">Users will be provided with a receipt which has a QR code by the operator on-duty after sending their clothes. An email prompt will appear when the user scans the QR code. The user then has to send the verification code from the receipt through the email prompt.</p>
+                            </div>
+                            <hr class="my-4" />
+
+                            <div class="course-col">
+                                <h3>3) REWARD</h3>
+                                <p class="text-justify">After the code has been certified, the server administrator will upload the coupon reward that corresponds with the user's donation. The coupon rewards are given based on a weight-point system.</p>
+                            </div>
+                            <hr class="my-4" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}
+
+

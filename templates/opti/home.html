@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header class="masthead" style="background-image: url('static/ho/assets/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>POSTS & UPDATES</h1>
+                    <span class="meta">
+                        <h2 class="subheading">Updates to the website and coupon notices are posted here every week.</h2>
+                    </span>
+                    <span class="meta">
+                        <h2 class="subheading">Do stay tuned to not miss out on any offers!</h2>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% include 'includes/message.html' %}
+{% for post in posts %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            <div class="view">
+                <div class="media-body">
+                        <h2><a class="article-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                        {% if post.video %}
+                            <video class="embed-responsive embed-responsive-16by9" width="660" height="480" controls="controls">
+                                <source src="{{ post.video.url }}" type="video/mp4" />
+                            </video>
+                        {% else %}
+                        {% endif %}
+                        <p class="article-content">{{ post.content }}
+                        </p>
+                        <p class="post-meta">
+                            Posted by
+                            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>                    
+                            on <small class="text-muted">{{ post.date_posted|date:"F d, Y"}}</small>
+                        </p>
+                </div>
+            </div>
+            <hr class="my-4" />
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
+

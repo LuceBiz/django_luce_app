@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'lo/css/style.css' %}">
+
+
+<header class="masthead" style="background-image: url({% static 'ho/assets/img/tin.jpg' %})">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+]				<section class="ftco-section">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<a href="{% url 'state' %}" class="btn btn-dark my-3"> Go Back </a>
+
+								<form method="POST" action="">{% csrf_token%}
+									<div class="post-heading">
+									{{ form | crispy }}
+									</div>
+									<br>
+									<input class="btn btn-info" type="submit" value="Search"/>
+								</form>
+								<br>
+								<div class="table-wrap">
+									<table class="table">
+										<thead class="thead-primary">
+											<tr>
+												<th>Count</th>
+												<th>Preview</th>
+												<th>Type</th>
+												<th>Shop</th>
+												<th>Sum</th>
+												<th>Code</th>
+												<th>Exp. Date</th>
+												<th>Delete</th>
+											</tr>
+										</thead>
+										{% for instance in queryset %}
+										<tbody>
+											<tr>
+												<td>{{ forloop.counter }}</td>
+												{% if instance.photo %}
+													<td>
+														<img src="{{ instance.photo.url }}" class="img" style=" height: 200px; width:200px;">
+													</td>
+												{% else %}
+													<td>
+														<img href="https://cdn-icons-png.flaticon.com/512/860/860829.png">{{ instance.photo }}
+													</td>
+												{% endif %}
+												<td class="email">{{ instance.coupon_type }}</td>
+												<td><a href="{% url 'update' instance.id %}" class="email">{{instance.shop }}</a></td>
+												<td class="email">{{ instance.quantity }}</td>
+												<td class="email">{{ instance.code }}</td>
+												<td class="quantity">{{ instance.end }}</td>
+												<td><a href="{% url 'delete' instance.id %}"><img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" style="height: 20px; width:20px;"></a></td>
+												</tr>
+										</tbody>
+										{% endfor %}
+										</table>
+								</div>
+							</div>
+						</div>
+				</section>
+			</div>
+            </div>
+        </div>
+    </div>
+</header>
+{% include 'includes/message.html' %}
+
+	
+
+		
+<script src="{% static 'lo/js/jquery.min.js' %}"></script>
+<script src="{% static 'lo/js/popper.js' %}"></script>
+<script src="{% static 'lo/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'lo/js/main.js' %}"></script>
+{% endblock content %}
+
