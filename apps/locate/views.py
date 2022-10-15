@@ -1,10 +1,13 @@
 from unicodedata import name
 from django.shortcuts import render, redirect
 from requests import request
-from .models import Category, Info, Coupon
+from .models import Category, Info, Coupon, Film
 from .forms import CouponCreateForm, CouponSearchForm, CouponUpdateForm
 from django.contrib.auth.decorators import login_required
 import folium
+from taggit.models import Tag
+from rest_framework.generics import ListAPIView
+from .serializers import FilmSerializer
 
 #####HOME#######
 def state(request):
@@ -52,36 +55,6 @@ def infoLocation(request, pk):
 
     return render(request, 'locate/location_info.html', context)
 
-
-def addLocation(request):
-    categories = Category.objects.all()
-
-    if request.method == 'POST':
-        data = request.POST
-        image = request.FILES.get('image')
-        print('data:', data)
-        print('image:', image)
-
-        if data['category'] != 'none':
-            category = Category.objects.get(id=data['category'])
-        elif data['category_new'] != '':
-            category, created = Category.objects.get_or_create(name=data['category_new'])
-        else:
-            category = None
-
-        info = Info.objects.create(
-            category = category,
-            description = data['description'],
-            image = image,
-        )
-
-        return redirect('state')
-
-    context = {
-        'categories' : categories,
-        }
-    return render(request, 'locate/add.html', context)
-
 ######NEW#####
 
 @login_required
@@ -102,19 +75,6 @@ def list_items(request):
     }
 
     return render(request, 'locate/list_items.html', context)
-
-def add_items(request):
-    form = CouponCreateForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('/list_items')
-
-    context = {
-        'form' : form,
-        'title' : 'Add Item',
-    }
-    return render(request, 'locate/add_items.html', context)
-
 
 def update_items(request, pk):
     queryset = Coupon.objects.get(id=pk)
@@ -138,4 +98,21 @@ def delete_items(request, pk):
         return redirect('/list_items')
     
     return render(request, 'locate/delete_items.html')
+
+######COMMODITY#####
+
+def index(request):
+    films = Film.objects.prefetch_related('tags').all()
+    tags = Tag.objects.all()
+
+    context = {
+        'films' : films,
+        'tags' : tags
+    }
+    return render(request, 'locate/stuff.html', context)
+
+class FilmListAPIView(ListAPIView):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
+
 

@@ -3,6 +3,9 @@ from tkinter import CASCADE
 from unicodedata import category
 from django.db import models
 from sqlalchemy import null
+from taggit.managers import TaggableManager
+
+# Create your models here.
 
 # Create your models here.
 
@@ -11,6 +14,22 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class Film(models.Model):
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, blank=True)
+    name = models.CharField(max_length=100, null=False, blank=False)
+    operating_hours = models.TextField(null=True, blank=True)
+    website = models.CharField(max_length=100, null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    email = models.TextField(null=True, blank=True)
+    phone = models.TextField(null=True, blank=True)
+
+    tags = TaggableManager()
+
+    def __str__(self):
+        return self.name
+
+
 
 class Info(models.Model):
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, blank=True)
